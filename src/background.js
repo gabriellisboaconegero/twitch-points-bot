@@ -1,5 +1,5 @@
-const muteUnmuteCommand =  `document.querySelector("button[data-a-target='player-mute-unmute-button']").click();`
 
+// Ao instalar, fazer update ou update do google cgrome ela vai ser cahamada, seta os valores iniciais dos canais
 chrome.runtime.onInstalled.addListener(() => {
     let channelsData = getChannelsData();
     chrome.storage.sync.set({channelsData: channelsData, watchingNow: 'button'}, function(){
@@ -7,32 +7,33 @@ chrome.runtime.onInstalled.addListener(() => {
     });
 });
 
-function toglleSound(tab){
-    setTimeout(chrome.tabs.executeScript(tab[0].id, {
-        code: muteUnmuteCommand
-    }), 5000);
-    
-}
-
+// seleciona o canal
 function selectChannel(channelName, wasWatching){
     chrome.tabs.query({url: `*://*.twitch.tv/${channelName}`}, function(tab){
+                // se ja tiver aba aberta é redirecionado para ela
                     if (!tab.length){
-                        chrome.tabs.create({active: true, url: `https://www.twitch.tv/${channelName}`}, toglleSound);
-                    }else{
-                        chrome.tabs.update(tab[0].id, {active: true, muted: false}, toglleSound);
+                        chrome.tabs.create({active: true, url: `https://www.twitch.tv/${channelName}`});
                     }
+                    // caso contrario cria-se uma nova
+                    else{
+                        chrome.tabs.update(tab[0].id, {active: true, muted: false});
+                    }
+                    // no storage muda qual canal está sendo assistido
                     chrome.storage.sync.set({watchingNow:channelName}, function(){
-                        chrome.tabs.query({url: `*://*.twitch.tv/${wasWatching}`}, toglleSound);
+
                     });
                 }); 
 }
 
+// onMesage handler
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
+    // selecionar a aba
     if (request.msg == "select_and_move_to_tab"){
             selectChannel(request.channelName, request.wasWatching);
         }
 });
 
+// função temporaria que será substituida, mas a função é retornar uma objeto com as especificações do canal
 function getChannelsData(){
     let data = {
         jukiaq:{
@@ -42,7 +43,7 @@ function getChannelsData(){
                 pointsName: 'Esmeroldiers',
                 online: true
             },
-        jessjessjessu:{
+        marcobrunodev:{
                 image: `<img src="https://static-cdn.jtvnw.net/channel-points-icons/95009092/dd7e4104-dc63-4204-909b-056a817ab59b/icon-1.png" alt="{channelPointsName}" width="15px" height="15px">`,
                 farming: false,
                 points: '9.8 mil',
