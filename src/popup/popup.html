@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    <meta charset="utf-8">
     <title>Twitch Popup</title>
     <style>
         *{
@@ -42,12 +43,29 @@
             width: 15px;
             height: 15px;
         }
+        footer{
+            background-image: linear-gradient(to right, #a48dce, #6441A4 50%);
+            width: 50%;
+            transition: 1.5s;
+
+        }
+        footer:hover{
+            background-image: linear-gradient(to right, #a48dce, #6441A4);
+            width: 100%;
+        }
+        .settings{
+            cursor: pointer;
+        }
+        .off{
+            text-align: center;
+            color: rgb(85, 18, 29);
+        }
     </style>
 </head>
 <body>
     <main>
-        <ul>
-            <!-- <li>
+        <!-- <ul>
+            <li>
                 <div class="ch">
                     <div class="ch-name ch-flex ChannelName" title="Channel name">
                         <img src="../icons/false.png" alt="unchecked">
@@ -62,9 +80,19 @@
 
                     <div style="clear:both"></div>
                 </div>
-            </li> -->
+            </li>
         </ul>
+        <div class="ch off">
+            <span>No channels in live</span>
+        </div> -->
     </main>
+    <footer class="ch settings">
+            <div class="ch-flex">
+                <img src="../icons/settings.png" alt="Options">
+                <span>Options</span>
+            </div>
+    </footer>
     <script src="popup.js"></script>
+    <script src="channelsTemplate.js"></script>
 </body>
 </html>

@@ -2,7 +2,7 @@
 // Ao instalar, fazer update ou update do google cgrome ela vai ser cahamada, seta os valores iniciais dos canais
 chrome.runtime.onInstalled.addListener(() => {
     let channelsData = getChannelsData();
-    chrome.storage.sync.set({channelsData: channelsData, watchingNow: 'button'}, function(){
+    chrome.storage.sync.set({channelsData: channelsData, watchingNow: "none"}, function(){
         console.log("Channesldata valued to", channelsData);
     });
 });
