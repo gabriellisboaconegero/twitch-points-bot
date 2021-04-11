@@ -11,9 +11,7 @@ function update_channel_points(){
         let points = document.querySelector(".community-points-summary .channel-points-icon").parentNode.nextSibling.innerText;
         let channelName = document.URL.slice(document.URL.lastIndexOf('/')+1, document.URL.length);
         console.log("novos pontos", points, channelName);
-        chrome.runtime.sendMessage({newPoints: points});
-
-        
+        chrome.runtime.sendMessage({msg: 'update-channel-points', name: channelName, points}, () => {});     
 }
 
 function waitForElm(selector) {

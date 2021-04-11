@@ -7,7 +7,7 @@ function scriptIsInPage(tab){
                 response = {};
             } 
             if (response.awnser === "yes"){
-                console.log('adicionado');
+                console.log('já foi adicionado');
             }else{
                 console.log('não ta na page');
                 chrome.tabs.executeScript(tab.id, {file: "auto_click.js"});
@@ -43,29 +43,33 @@ chrome.runtime.onInstalled.addListener(() => {
 // seleciona o canal
 function selectChannel(channelName, cb=function(tab){console.log(tab)}){
     chrome.tabs.query({url: `*://*.twitch.tv/${channelName}`}, function(tab){
-                // se ja tiver aba aberta é redirecionado para ela
-                    if (!tab.length){
-                        chrome.tabs.create({active: true, url: `https://www.twitch.tv/${channelName}`}, cb);
-                    }
-                    // caso contrario cria-se uma nova
-                    else{
-                        chrome.tabs.update(tab[0].id, {active: true, muted: false}, cb);
-                    }
-                    // no storage muda qual canal está sendo assistido
-                    chrome.storage.sync.set({watchingNow:channelName}, function(){
-                        console.log(channelName);
-                    });
-                }); 
+        // se ja tiver aba aberta é redirecionado para ela
+        if (!tab.length){
+            chrome.tabs.create({active: true, url: `https://www.twitch.tv/${channelName}`}, cb);
+        }
+        // caso contrario cria-se uma nova
+        else{
+            chrome.tabs.update(tab[0].id, {active: true, muted: false}, cb);
+        }
+        // no storage muda qual canal está sendo assistido
+        chrome.storage.sync.set({watchingNow:channelName}, function(){
+            console.log(channelName);
+        });
+    }); 
 }
 
 // onMesage handler
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
-    // selecionar a aba
     if (request.msg == "select_and_move_to_tab"){
             selectChannel(request.channelName);
     }
-    if (sender.tab){
-        console.log(tab);
+    if (request.msg == "upadate-channel-points"){
+        console.log(request);
+        chrome.storage.sync.get("channelsData", data => {
+            console.log(data);
+            data[request.name].points = request.points;
+            chrome.storage.sync.set(data);
+        });
     }
 });
 
