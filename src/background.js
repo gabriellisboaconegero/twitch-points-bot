@@ -72,9 +72,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 // função temporaria que será substituida, mas a função é retornar uma objeto com as especificações do canal
 function getChannelsData(){
     let data = {
-        s0ldierbr:{
+        danielhe4rt:{
                 image: `<img src="https://static-cdn.jtvnw.net/channel-points-icons/166681140/7160e8ba-bf7c-45c9-9902-c7212dc58e30/icon-1.png" alt="{channelPointsName}" width="15px" height="15px">`,
-                farming: false,
+                farming: true,
                 points: '150',
                 pointsName: 'Esmeroldiers',
                 online: true
@@ -86,16 +86,16 @@ function getChannelsData(){
                 pointsName: 'Não sei',
                 online: true
             },
-        einbru: {
+        einebru: {
                 image: `<img src="https://static-cdn.jtvnw.net/channel-points-icons/470224575/b7a97335-572f-486f-bdae-3610ee23c3ac/icon-1.png" alt="{channelPointsName}" width="15px" height="15px">`,
-                farming: false,
+                farming: true,
                 points: '340',
                 pointsName: 'Bruédas',
                 online: true
             },
         JonBams: {
                 image: `<img src="https://static-cdn.jtvnw.net/channel-points-icons/48816734/f7129ae2-4974-47dd-998e-c70a19a4c783/icon-1.png" alt="{channelPointsName}" width="15px" height="15px">`,
-                farming: true,
+                farming: false,
                 points: '560',
                 pointsName: 'KnadezPoints',
                 online: true
