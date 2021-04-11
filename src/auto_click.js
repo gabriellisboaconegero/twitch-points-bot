@@ -12,7 +12,7 @@ function update_channel_points(){
             let points = document.getElementsByClassName("channel-points-icon")[0].parentNode.nextSibling.textContent;
             let channelName = document.URL.slice(document.URL.lastIndexOf('/')+1, document.URL.length);
             console.log(points, channelName);
-            // chrome.runtime.sendMessage()
+            chrome.runtime.sendMessage({newPoints: points});
         }, 10000)
         
 }
@@ -42,11 +42,17 @@ function colectPoints(elm){
     console.log(pointsBtn);
     pointsBtn.click();
     update_channel_points();
+    setTimeout(conectObserver, 10000);
+}
+
+function conectObserver(){
+    console.log("iniciando observer");
+    waitForElm(".claimable-bonus__icon").then(colectPoints);
 }
 
 function main(){
     setTimeout(function(){
-        waitForElm(".claimable-bonus__icon").then(colectPoints);
+        conectObserver();
         // waitForElm(".community-points-summary").then(e => console.log(e));
     }, 10000);
 }

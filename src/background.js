@@ -63,7 +63,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
     // selecionar a aba
     if (request.msg == "select_and_move_to_tab"){
             selectChannel(request.channelName);
-        }
+    }
+    if (sender.tab){
+        console.log(tab);
+    }
 });
 
 // função temporaria que será substituida, mas a função é retornar uma objeto com as especificações do canal
