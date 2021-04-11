@@ -8,7 +8,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 
 
 function update_channel_points(){
-        let points = document.getElementsByClassName("channel-points-icon")[0].parentNode.nextSibling.textContent;
+        let points = document.querySelector(".community-points-summary .channel-points-icon").parentNode.nextSibling.innerText;
         let channelName = document.URL.slice(document.URL.lastIndexOf('/')+1, document.URL.length);
         console.log("novos pontos", points, channelName);
         chrome.runtime.sendMessage({newPoints: points});
