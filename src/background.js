@@ -1,3 +1,4 @@
+// verificar se o script está na aba
 function scriptIsInPage(tab){
     console.log(tab);
     setTimeout(function(){
@@ -16,7 +17,7 @@ function scriptIsInPage(tab){
     }, 5000);   
 }
 
-function checkPage(){
+function openPages(){
     setTimeout(function(){
         chrome.storage.sync.get("channelsData", function(data){
             let channels = data.channelsData;
@@ -43,15 +44,12 @@ chrome.runtime.onInstalled.addListener(() => {
 // seleciona o canal
 function selectChannel(channelName, cb=function(tab){console.log(tab)}, active=true){
     chrome.tabs.query({url: `*://*.twitch.tv/${channelName}`}, function(tab){
-        // se ja tiver aba aberta é redirecionado para ela
         if (!tab.length){
             chrome.tabs.create({active: active, url: `https://www.twitch.tv/${channelName}`}, cb);
         }
-        // caso contrario cria-se uma nova
         else{
             chrome.tabs.update(tab[0].id, {active: true, muted: false}, cb);
         }
-        // no storage muda qual canal está sendo assistido
         chrome.storage.sync.set({watchingNow:channelName}, function(){
             console.log(channelName);
         });
@@ -61,9 +59,11 @@ function selectChannel(channelName, cb=function(tab){console.log(tab)}, active=t
 // onMesage handler
 chrome.runtime.onMessage.addListener(async function(request, sender, sendResponse){
     console.log(request);
+    // selecionar aba
     if (request.msg == "select_and_move_to_tab"){
             selectChannel(request.channelName);
     }
+    // update pontos de canal
     if (request.msg === "update-channel-points"){
         sendResponse({msg: "deu certo"});
         chrome.storage.sync.get("channelsData", channelsData => {
@@ -82,14 +82,14 @@ function getChannelsData(){
     let data = {
         danielhe4rt:{
                 image: `<img src="https://static-cdn.jtvnw.net/channel-points-icons/166681140/7160e8ba-bf7c-45c9-9902-c7212dc58e30/icon-1.png" alt="{channelPointsName}" width="15px" height="15px">`,
-                farming: true,
+                farming: false,
                 points: '150',
                 pointsName: 'Esmeroldiers',
                 online: true
             },
-        marcobrunodev:{
+        DletGamer:{
                 image: `<img src="https://static-cdn.jtvnw.net/channel-points-icons/95009092/dd7e4104-dc63-4204-909b-056a817ab59b/icon-1.png" alt="{channelPointsName}" width="15px" height="15px">`,
-                farming: false,
+                farming: true,
                 points: '9.8 mil',
                 pointsName: 'Não sei',
                 online: true
@@ -128,7 +128,7 @@ function getChannelsData(){
 
 function main(){
     console.log("Iniciando extesão");
-    checkPage();
+    openPages();
 }
 
 main();
