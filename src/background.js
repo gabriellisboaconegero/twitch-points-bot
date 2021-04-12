@@ -24,7 +24,7 @@ function checkPage(){
                 let channel = channels[channelName];
                 let name = channelName;
                 if (channel.farming && channel.online){
-                    selectChannel(name, scriptIsInPage);
+                    selectChannel(name, scriptIsInPage, false);
                 }
             }
         });
@@ -41,11 +41,11 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 // seleciona o canal
-function selectChannel(channelName, cb=function(tab){console.log(tab)}){
+function selectChannel(channelName, cb=function(tab){console.log(tab)}, active=true){
     chrome.tabs.query({url: `*://*.twitch.tv/${channelName}`}, function(tab){
         // se ja tiver aba aberta é redirecionado para ela
         if (!tab.length){
-            chrome.tabs.create({active: true, url: `https://www.twitch.tv/${channelName}`}, cb);
+            chrome.tabs.create({active: active, url: `https://www.twitch.tv/${channelName}`}, cb);
         }
         // caso contrario cria-se uma nova
         else{
@@ -59,18 +59,22 @@ function selectChannel(channelName, cb=function(tab){console.log(tab)}){
 }
 
 // onMesage handler
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
+chrome.runtime.onMessage.addListener(async function(request, sender, sendResponse){
+    console.log(request);
     if (request.msg == "select_and_move_to_tab"){
             selectChannel(request.channelName);
     }
-    if (request.msg == "upadate-channel-points"){
-        console.log(request);
-        chrome.storage.sync.get("channelsData", data => {
-            console.log(data);
+    if (request.msg === "update-channel-points"){
+        sendResponse({msg: "deu certo"});
+        chrome.storage.sync.get("channelsData", channelsData => {
+            let data = channelsData.channelsData;
+            console.log('old', data);
             data[request.name].points = request.points;
-            chrome.storage.sync.set(data);
+            console.log('new', data);
+            chrome.storage.sync.set({channelsData: data}, () => {});
         });
     }
+    return true;
 });
 
 // função temporaria que será substituida, mas a função é retornar uma objeto com as especificações do canal
@@ -92,7 +96,7 @@ function getChannelsData(){
             },
         einebru: {
                 image: `<img src="https://static-cdn.jtvnw.net/channel-points-icons/470224575/b7a97335-572f-486f-bdae-3610ee23c3ac/icon-1.png" alt="{channelPointsName}" width="15px" height="15px">`,
-                farming: true,
+                farming: false,
                 points: '340',
                 pointsName: 'Bruédas',
                 online: true
@@ -104,7 +108,7 @@ function getChannelsData(){
                 pointsName: 'KnadezPoints',
                 online: true
             },
-        Gaules: {
+        maiconkusterkay: {
                 image: `<img src="https://static-cdn.jtvnw.net/channel-points-icons/47125717/0447e333-9ea8-41b3-8605-94f0559a9b59/icon-1.png" alt="{channelPointsName}" width="15px" height="15px">`,
                 farming: false,
                 points: '20 mil',

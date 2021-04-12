@@ -1,3 +1,4 @@
+// manda resposta se tiver na aba
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
     console.log(request, sender);
     if (request.question === "are_u_there"){
@@ -6,14 +7,16 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
     
 });
 
-
 function update_channel_points(){
         let points = document.querySelector(".community-points-summary .channel-points-icon").parentNode.nextSibling.innerText;
         let channelName = document.URL.slice(document.URL.lastIndexOf('/')+1, document.URL.length);
         console.log("novos pontos", points, channelName);
-        chrome.runtime.sendMessage({msg: 'update-channel-points', name: channelName, points}, () => {});     
+        chrome.extension.sendMessage({msg: 'update-channel-points', name: channelName, points}, (response) => {
+            console.log("mensagem enviada", response);
+        });     
 }
 
+// espera o elemento aparecer na tela
 function waitForElm(selector) {
     return new Promise(resolve => {
         if (document.querySelector(selector)) {
@@ -33,7 +36,7 @@ function waitForElm(selector) {
         });
     });
 }
-
+// espera o eleemento desaparecer da tela
 function waitForElmToLeft(selector) {
     return new Promise(resolve => {
         if (document.querySelector(selector) == null) {
@@ -59,22 +62,22 @@ function colectPoints(elm){
     console.log("apareceu o botão", pointsBtn);
     pointsBtn.click();
     update_channel_points();
-    waitForElmToLeft(".claimable-bonus__icon").then(() => {
+    // espera o botão desaparecer para só então verificar quando vai aparecer denovo
+    waitForElmToLeft(".claimable-bonus__icon").then(() => {    
             console.log("Elemento desapareceu");
             conectObserver();
-    });
+    }).catch((reason) => console.log(reason));
 }
 
 function conectObserver(){
-    setTimeout(() => {
-        console.log("iniciando observer");
-        waitForElm(".claimable-bonus__icon").then(colectPoints);
-    }, 2000); 
+    console.log("iniciando observer");
+    waitForElm(".claimable-bonus__icon").then(colectPoints); 
 }
 
 function main(){
     setTimeout(function(){
         conectObserver();
+        update_channel_points();
     }, 10000);
 }
 
