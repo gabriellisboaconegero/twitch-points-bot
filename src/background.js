@@ -82,7 +82,7 @@ chrome.runtime.onMessage.addListener(async function(request, sender, sendRespons
 function getChannelsData(){
     let data = [
         {
-            name: "danielhe4rt",
+            name: "einebru",
             image: `<img src="https://static-cdn.jtvnw.net/channel-points-icons/166681140/7160e8ba-bf7c-45c9-9902-c7212dc58e30/icon-1.png" alt="{channelPointsName}" width="15px" height="15px">`,
             farming: false,
             points: '150',
@@ -90,7 +90,7 @@ function getChannelsData(){
             online: true
         },
         {
-            name: "DletGamer",
+            name: "S0ldierbr",
             image: `<img src="https://static-cdn.jtvnw.net/channel-points-icons/95009092/dd7e4104-dc63-4204-909b-056a817ab59b/icon-1.png" alt="{channelPointsName}" width="15px" height="15px">`,
             farming: true,
             points: '9.8 mil',
@@ -100,7 +100,7 @@ function getChannelsData(){
         {
             name: "einebru",
             image: `<img src="https://static-cdn.jtvnw.net/channel-points-icons/470224575/b7a97335-572f-486f-bdae-3610ee23c3ac/icon-1.png" alt="{channelPointsName}" width="15px" height="15px">`,
-            farming: false,
+            farming: true,
             points: '340',
             pointsName: 'Bruédas',
             online: true
