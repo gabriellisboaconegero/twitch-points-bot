@@ -17,21 +17,24 @@
         <main>
             <ul class="settings">
                 <li>
-                    <div class="setting-name">
+                    <div class="setting-name scroll">
                         <div class="title gray">
                             <h1>Streamers</h1>
                         </div>
+                        <div class="scroll-header" >
+                            <div class="scroll-indicator" id="scroll-ind"></div>
+                        </div>
                     </div>        
-                    <div class="setting-content">
+                    <div class="setting-content" onscroll="scrollindicator(this)">
                         <ul>
                             <li>
                                 <div class="ch">
-                                    <div class="ch-name ch-flex">
+                                    <div class="ch-name">
                                         <span>channel name</span>
                                     </div>
                                     <div class="ch-pts ch-flex" title="channelPointsName">
                                         <img src="https://static-cdn.jtvnw.net/channel-points-icons/95009092/dd7e4104-dc63-4204-909b-056a817ab59b/icon-1.png" alt="channelPointsName" width="20px" height="20px">
-                                        <span>channelPoints</span>
+                                        <span>1,5 mil</span>
                                     </div>
                                     <div class="ch-settings">
                                         <ul>
@@ -63,7 +66,7 @@
                                                         <label for="channelRaidFarm-dlet">Farmar pontos em uma raid</label>
                                                     </div>
                                                     <div class="switch">
-                                                        <input type="checkbox" name="channelRaidFarm" id="channelRaidFarm-dlet" oninput="warning(this)">
+                                                        <input type="checkbox" name="channelRaidFarm" id="channelRaidFarm-dlet">
                                                         <label for="channelRaidFarm-dlet" class="slider"></label>
                                                     </div>
                                                     <div class="warning dlet">
@@ -79,7 +82,7 @@
                             </li>
                             <li>
                                 <div class="ch">
-                                    <div class="ch-name ch-flex">
+                                    <div class="ch-name">
                                         <span>channel name</span>
                                     </div>
                                     <div class="ch-pts ch-flex" title="channelPointsName">
@@ -116,10 +119,10 @@
                                                         <label for="channelRaidFarm-soldier">Farmar pontos em uma raid</label>
                                                     </div>
                                                     <div class="switch">
-                                                        <input type="checkbox" name="channelRaidFarm" id="channelRaidFarm-soldier" oninput="warning(this)">
+                                                        <input type="checkbox" name="channelRaidFarm" id="channelRaidFarm-soldier">
                                                         <label for="channelRaidFarm-soldier" class="slider"></label>
                                                     </div>
-                                                    <div class="warning dlet">
+                                                    <div class="warning soldier">
                                                         <div class="message">
                                                             <span>Se você habilitar essa opção, o canal da raid será adicionado ao seus canais de farm</span>
                                                         </div>
@@ -130,6 +133,59 @@
                                     </div>
                                 </div>
                             </li>
+                            <li>
+                                <div class="ch">
+                                    <div class="ch-name ch-flex">
+                                        <span>channel name</span>
+                                    </div>
+                                    <div class="ch-pts ch-flex" title="channelPointsName">
+                                        <img src="https://static-cdn.jtvnw.net/channel-points-icons/95009092/dd7e4104-dc63-4204-909b-056a817ab59b/icon-1.png" alt="channelPointsName" width="20px" height="20px">
+                                        <span>channelPoints</span>
+                                    </div>
+                                    <div class="ch-settings">
+                                        <ul>
+                                            <li>
+                                                <div class="setting-container sound">
+                                                    <div class="setting">
+                                                        <label for="channelSound-jess">Deixar áudio fechado ao abrir a aba</label>
+                                                    </div>
+                                                    <div class="switch">
+                                                        <input type="checkbox" name="channelSound" id="channelSound-jess">
+                                                        <label for="channelSound-jess" class="slider"></label>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="setting-container farm">
+                                                    <div class="setting">
+                                                        <label for="channelFarming-jess">Habiliatar farming nesse streamer</label>
+                                                    </div>
+                                                    <div class="switch">
+                                                        <input type="checkbox" name="channelFarming" id="channelFarming-jess">
+                                                        <label for="channelFarming-jess" class="slider"></label>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="setting-container raid-farm">
+                                                    <div class="setting">
+                                                        <label for="channelRaidFarm-jess">Farmar pontos em uma raid</label>
+                                                    </div>
+                                                    <div class="switch">
+                                                        <input type="checkbox" name="channelRaidFarm" id="channelRaidFarm-jess">
+                                                        <label for="channelRaidFarm-jess" class="slider"></label>
+                                                    </div>
+                                                    <div class="warning jess">
+                                                        <div class="message">
+                                                            <span>Se você habilitar essa opção, o canal da raid será adicionado ao seus canais de farm</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>         
                         </ul>
                     </div>
                 </li>
@@ -161,6 +217,11 @@
                             <div class="switch">
                                 <input type="checkbox" name="deactivate" id="deactivate">
                                 <label for="deactivate" class="slider"></label>
+                            </div>
+                            <div class="warning">
+                                <div class="message">
+                                    <span>Essa opção não vai desabilitar a extensão, apenas vai impedir que o conteudo dela seja executado, porém ele continuará inserido no seu chrome</span>
+                                </div>
                             </div>
                         </div>
                     </div>

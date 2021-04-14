@@ -38,10 +38,26 @@ main{
 }
 .setting-content{
     margin: 10px 15px;
-
     max-height: 0;
     overflow: hidden;
     transition: max-height .4s ease-out;
+    position: relative;
+}
+.active > .scroll-header{
+    height: 6px;
+    margin: 10px 20px;
+    border-radius: 5px;
+    background-color: rgba(105, 105, 105, 0.527);
+}
+.scroll-indicator{
+    width: 0%;
+    height: 100%;
+    background-color: rgb(105, 105, 105);
+    border-radius: 5px;
+    margin: 0 auto;
+}
+.scroll.active::after{
+    display: none;
 }
 .settings{
     border: 3px solid rgba(245, 245, 245, 0.719);
@@ -87,14 +103,23 @@ main{
 .novo-canal input:focus{
     border-color: rgb(105, 105, 105);
 }
+.ch-settings{
+    background-color: rgb(206, 206, 206);
+    border-radius: 10px;
+}
+.ch-settings > ul li:nth-child(even){
+    background-color: rgb(228, 228, 228);
+}
 .setting-container{
     padding: 5px 15px;
-    background-color: rgb(206, 206, 206);
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     flex-direction: row;
     justify-content: space-between;
+} 
+.setting-content::-webkit-scrollbar{
+    display: none;
 }
 .switch{
     position: relative;
@@ -131,30 +156,78 @@ main{
     transition: .4s;
 }
 .switch input:checked + .slider{
-    background-color: green;
+    background-color: #0077ff;
 }
 .switch input:checked + .slider::before{
     transform: translateX(16px);
 }
 .warning{
-    height: 0;
+    max-height: 0;
     overflow: hidden;
-    text-align: center;
-    background-color: rgba(255, 0, 0, 0.534);
-    font-size: 12px;  
-    font-weight: 600;
     animation: warningOut .4s;
+    position: relative;
 }
 .warning.show{
     animation: warningIn .4s;
-    border-radius: 10px;
-    margin-top: 10px;
-    padding: 5px;
-    height: 40px;
+    max-height: 100px;
+    padding: 10px;
 }
 @keyframes warningIn {
-    from {height: 0;}
-    to {height: 40px;}
+    from {max-height: 0;}
+    to {max-height: 100px;}
+}
+@keyframes warningOut {
+    from {max-height: 100px}
+    to {max-height: 0;}
+}
+.message{
+    text-align: center;
+    background-color: rgba(255, 0, 0, 0.534);
+    font-size: 12px;
+    padding: 10px;
+    font-weight: 600;
+    border-radius: 15px;
+}
+.warning.show::before{
+    content: '';
+    border-width: 6px;
+    border-color: rgba(255, 0, 0, 0.534) transparent transparent rgba(255, 0, 0, 0.534);
+    border-style: solid;
+    right: calc(50% - 13px);
+    top: 4px;
+    position: absolute;
+    transform: rotateZ(45deg);
+}
+.ch-name{
+    text-align: center;
+    padding: 10px;
+    font-size: 20px;
+}
+.ch-name > span{
+    position: relative;
+}
+.ch-name > span::before{
+    content: '';
+    position: absolute;
+    width: 120%;
+    height: 4px;
+    top: 100%;
+    left: -10%;
+    border-radius: 5px;
+    background-color: rgb(105, 105, 105);
+}
+.ch-flex{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+.ch-pts{
+    margin: 10px;
+    font-weight: 500;
+}
+.ch-pts > span{
+    margin-left: 10px;
 }
     
 

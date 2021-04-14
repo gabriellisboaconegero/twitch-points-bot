@@ -7,16 +7,28 @@ function openSetting(){
         }
     }
     this.classList.toggle('active');
+    scrollindicator(this);
 }
-let o = document.getElementsByClassName("setting-name")
+
+function warning(){
+    if (this.checked){
+        this.parentNode.nextElementSibling.className += ' show';
+    }else{
+        this.parentNode.nextElementSibling.className = this.parentNode.nextElementSibling.className.replace(" show", "");
+    }
+}
+
+function scrollindicator(elm){
+    var winScroll = document.body.scrollTop || elm.scrollTop
+    var height = elm.scrollHeight - elm.clientHeight;
+    var scrolled = (winScroll / height) * 100;
+    document.getElementById('scroll-ind').style.width = (scrolled + (scrolled <= 95? 5: 0)) + "%";
+}
+let o = document.getElementsByClassName("setting-name");
 for (let i = 0; i < o.length; i++){
     o[i].addEventListener("click", openSetting);
 }
-function warning(elm){
-    console.log(elm.checked);
-    if (elm.checked){
-        elm.parentNode.nextElementSibling.className += ' show';
-    }else{
-        elm.parentNode.nextElementSibling.className = elm.parentNode.nextElementSibling.className.replace(" show", "");
-    }
+let al = document.getElementsByClassName("warning");
+for (let i = 0; i < al.length; i++) {
+    al[i].previousElementSibling.firstElementChild.addEventListener("input", warning);    
 }
