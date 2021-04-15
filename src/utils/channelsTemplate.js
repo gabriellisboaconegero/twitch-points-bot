@@ -6,7 +6,7 @@ function popupHTML(channels){
         if (channel.online){
             // essa image pode ser tanto img ou svg, por isso as configurações são setadas antes
             let image = channel.image;
-            let isChannelFarming = channel.farming
+            let isChannelFarming = channel.settings.farm;
             let channelPoints = channel.points;
             let channelPointsName = channel.pointsName;
             let templateString = `

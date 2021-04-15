@@ -7,13 +7,14 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
     
 });
 
-function update_channel_points(){
-        let points = document.querySelector(".community-points-summary .channel-points-icon").parentNode.nextSibling.innerText;
-        let channelName = document.URL.slice(document.URL.lastIndexOf('/')+1, document.URL.length);
-        console.log("novos pontos", points, channelName);
-        chrome.extension.sendMessage({msg: 'update-channel-points', name: channelName, points}, (response) => {
-            console.log("mensagem enviada", response);
-        });     
+function update_channel_points(elm){
+    elm = elm || document.querySelector(".community-points-summary .channel-points-icon");
+    let points = elm.parentNode.nextSibling.innerText;
+    let channelName = document.URL.slice(document.URL.lastIndexOf('/')+1, document.URL.length);
+    console.log("novos pontos", points, channelName);
+    chrome.extension.sendMessage({msg: 'update-channel-points', name: channelName, points}, (response) => {
+        console.log("mensagem enviada", response);
+    });     
 }
 
 // espera o elemento aparecer na tela
@@ -71,13 +72,13 @@ function colectPoints(elm){
 
 function conectObserver(){
     console.log("iniciando observer");
-    waitForElm(".claimable-bonus__icon").then(colectPoints); 
+    waitForElm(".claimable-bonus__icon").then(colectPoints);
 }
 
 function main(){
     setTimeout(function(){
         conectObserver();
-        update_channel_points();
+        waitForElm(".community-points-summary .channel-points-icon").then(update_channel_points);
     }, 10000);
 }
 
