@@ -1,9 +1,10 @@
 // manda resposta se tiver na aba
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
+chrome.runtime.onMessage.addListener(async function(request, sender, sendResponse){
     console.log(request, sender);
     if (request.question === "are_u_there"){
         sendResponse({awnser: 'yes'});
     }
+    return true;
     
 });
 

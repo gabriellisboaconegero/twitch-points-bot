@@ -1,4 +1,4 @@
-function streamersTemplate(data){
+function streamers(data){
     let template;
     if (data.length !== 0){
         template = '<ul>' + data.reduce((template, channel, index, array) => {
@@ -23,7 +23,7 @@ function streamersTemplate(data){
                                         <label for="channelSound-${channel.name}">Deixar áudio fechado ao abrir a aba</label>
                                     </div>
                                     <div class="switch">
-                                        <input type="checkbox" name="channelSound" id="channelSound-${channel.name} "${audio}>
+                                        <input type="checkbox" name="channelSound" id="channelSound-${channel.name}"${audio}>
                                         <label for="channelSound-${channel.name}" class="slider"></label>
                                     </div>
                                 </div>
