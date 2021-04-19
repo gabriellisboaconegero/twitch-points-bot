@@ -24,8 +24,37 @@ function scrollindicator(){
     document.getElementById('scroll-ind').style.width = (scrolled + (scrolled <= 95? 5: 0)) + "%";
 }
 
-function addStreamer(){
+function addStreamer(event){
+    let newChannel = this.channelName.value;
+    if (newChannel === ""){
+        event.preventDefault();
+        console.log("coloque um nome");
+        return;
+    }
+
+    chrome.storage.sync.get(["channelsData", "settings"], data => {
+        let channelsData = data.channelsData;
+        let defaultSettings = data.settings;
+        channelsData.push(
+            {
+                "name": newChannel,
+                "image": "<svg type='color-fill-current' width='20px' height='20px' version='1.1' viewBox='0 0 20 20' x='0px' y='0px' class='ScSvg-sc-1j5mt50-1 jLaQtw'><g><path d='M10 6a4 4 0 014 4h-2a2 2 0 00-2-2V6z'></path><path fill-rule='evenodd' d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-2 0a6 6 0 11-12 0 6 6 0 0112 0z' clip-rule='evenodd'></path></g></svg>",
+                "points": 0,
+                "pointsName": undefined,
+                "online": false,
+                "settings": {
+                    "audio": defaultSettings.audio,
+                    "farm": defaultSettings.farm,
+                    "raid":defaultSettings.raid
+                }
+            }
+        );
+        chrome.storage.sync.set({channelsData});
+        main();
+    });
+
     
+
 }
 
 function main(){
@@ -44,7 +73,7 @@ function main(){
         }
         document.getElementsByClassName("scroll")[0].nextElementSibling.addEventListener("scroll", scrollindicator);
 
-        document.forms.novoCanal.addEventListener("change", addStreamer);
+        document.forms.novoCanal.addEventListener("submit", addStreamer);
     });
 }
 main();
