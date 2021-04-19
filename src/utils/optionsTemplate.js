@@ -7,7 +7,7 @@ function streamers(data){
             let raid = channel.settings.raid? "checked": '';
             let streamerTemplate = `
             <li>
-                <div class="ch">
+                <div class="ch ${channel.name}">
                     <div class="ch-name">
                         <span>${channel.name[0].toUpperCase() + channel.name.slice(1)}</span>
                     </div>
@@ -40,7 +40,7 @@ function streamers(data){
                                 </div>
                             </li>
                             <li>
-                                <div class="setting-container raid-farm">
+                                <div class="setting-container raid">
                                     <div class="setting">
                                         <label for="channelRaidFarm-${channel.name}">Farmar pontos em uma raid</label>
                                     </div>

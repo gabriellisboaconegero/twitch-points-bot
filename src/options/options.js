@@ -49,12 +49,23 @@ function addStreamer(event){
                 }
             }
         );
-        chrome.storage.sync.set({channelsData});
-        main();
+        chrome.storage.sync.set({channelsData}, main);
     });
+}
 
+function saveModifications(event){
+    chrome.storage.sync.get("channelsData", data => {
+        let channels = data.channelsData;
+        for (let i = 0; i < channels.length; i++){
+            let channel = document.getElementsByClassName(channels[i].name)[0];
+            channels[i].settings.audio = channel.querySelector(".sound > .switch > input").checked;
+            channels[i].settings.farm = channel.querySelector(".farm > .switch > input").checked;
+            channels[i].settings.raid = channel.querySelector(".raid > .switch > input").checked;
+        }
+        chrome.storage.sync.set({channelsData:channels}, main);
+
+    });
     
-
 }
 
 function main(){
@@ -74,6 +85,8 @@ function main(){
         document.getElementsByClassName("scroll")[0].nextElementSibling.addEventListener("scroll", scrollindicator);
 
         document.forms.novoCanal.addEventListener("submit", addStreamer);
+
+        document.getElementsByTagName("footer")[0].addEventListener("click", saveModifications);
     });
 }
 main();
